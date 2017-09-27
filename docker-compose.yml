@@ -1,0 +1,38 @@
+version: '2'
+services:
+    app2-app:
+        build: app2
+        depends_on: 
+            - app2-mongodb
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATA_MONGODB_URI=mongodb://app2-mongodb:27017
+            - SPRING_DATA_MONGODB_DATABASE=app2
+            - APP2_SLEEP=10 # time for the database to boot before the application
+    app2-mongodb:
+        image: mongo:3.4.8
+        ports:
+            - "27017:27017"
+        volumes:
+            - ~/volumes/jhipster/app2/mongodb/:/data/db/
+
+    app1-app:
+        build: app1
+        depends_on: 
+            - app1-mysql
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATASOURCE_URL=jdbc:mysql://app1-mysql:3306/app1?useUnicode=true&characterEncoding=utf8&useSSL=false
+            - APP1_SLEEP=10 # time for the database to boot before the application
+    app1-mysql:
+        image: mysql:5.7.19
+        volumes:
+            - ~/volumes/jhipster/app1/mysql/:/var/lib/mysql/
+        environment:
+            - MYSQL_USER=root
+            - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+            - MYSQL_DATABASE=app1
+        ports:
+            - 3306:3306
+        command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8 --explicit_defaults_for_timestamp
+
