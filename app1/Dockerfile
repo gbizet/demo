@@ -1,10 +1,11 @@
-FROM openjdk:8-jre-alpine
+FROM oracle/openjdk
 
 ENV SPRING_OUTPUT_ANSI_ENABLED=ALWAYS \
     APP1_SLEEP=0 \
     JAVA_OPTS=""
 
-ADD *.war /app.war
+CMD ./mvnw package
+ADD target/microapp-1-0.0.1-SNAPSHOT.war /app.war
 
 EXPOSE 8081
 CMD echo "The application will start in ${APP1_SLEEP}s..." && \

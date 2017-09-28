@@ -1,7 +1,7 @@
-version: '2'
+version: '3.1'
 services:
     app2-app:
-        build: app2
+        image: dtr.finaxys.com/mbouluad/app2:1.1 
         depends_on: 
             - app2-mongodb
         environment:
@@ -17,7 +17,7 @@ services:
             - ~/volumes/jhipster/app2/mongodb/:/data/db/
 
     app1-app:
-        build: app1
+        image: dtr.finaxys.com/mbouluad/app1:1.1 
         depends_on: 
             - app1-mysql
         environment:
@@ -33,6 +33,6 @@ services:
             - MYSQL_ALLOW_EMPTY_PASSWORD=yes
             - MYSQL_DATABASE=app1
         ports:
-            - 3306:3306
+            - 3306
         command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8 --explicit_defaults_for_timestamp
 

@@ -4,7 +4,8 @@ ENV SPRING_OUTPUT_ANSI_ENABLED=ALWAYS \
     APP2_SLEEP=0 \
     JAVA_OPTS=""
 
-ADD *.war /app.war
+CMD ./mvnw package
+ADD /target/app-2-0.0.1-SNAPSHOT.war /app.war
 
 EXPOSE 8082
 CMD echo "The application will start in ${APP2_SLEEP}s..." && \
